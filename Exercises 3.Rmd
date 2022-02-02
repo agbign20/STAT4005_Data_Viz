@@ -1,0 +1,63 @@
+---
+title: "Exercises 3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+8.1.2 General Principles
+Read Sections 8.1 through 8.3 of Modern Data Science with R, found here.
+
+Exercise 1. Pick 1 of the 3 examples (stand your ground, climate change, or covid cases), and summarize why that graphic is not ethical. Make sure to include the context that the graph was created in from Section 8.3 in your explanation.
+
+The covid graphic is not ethical because the dates are not in chronological order and the counties are order so all the results are monotonically decreasing, misleading us to believe that covid cases were decreasing.
+
+ 
+Read the short Section 8.5 of Modern Data Science with R, found here, stopping at Section 8.5.1.
+
+Exercise 2. Choose 2 of the 12 principles of ethical practice of data science and come up a (possibly hypothetical) scenario where each of your two chosen principles would come into play.
+
+Principle 1 could be used when using data to improve communities during covid. Using data, we can find out if the covid vaccine has been lowering the number of cases and as a result help advertise this data in order to get other community members to participate.
+Principle 5 could be used when trying to plan a project in the direction we want. By clearly identifying questions and writing down our objectives, we can stayed organized throughout our project process and stay focused on the questions we want to answer.
+
+
+With any data visualization, we need to think critically about what data is actually being visualized as well as the context that the data came from. Consider the following exercise.
+
+Exercise 3a. Find a graphic on the Internet that shows evidence that the Covid vaccine has “worked.”
+https://www.cdc.gov/vaccines/acip/meetings/downloads/slides-2021-09-22/04-COVID-Link-Gelles-508.pdf
+
+
+Exercise 3b. Find a graphic on the Internet that shows evidence that the Covid vaccine has “not worked.”
+https://maru.nationaltraumaconsortium.org/general/vaccine-effectiveness-covid-chart.html
+
+
+
+8.2 Sensitive Data Visualizations
+Warning: The following section deals with sensitive data on lynchings in the United States. If, at any point, working through these examples is detrimental to your mental health, please stop immediately. You may request an alternative assignment with no explanation necessary.
+
+When visualizing sensitive data, we not only need to consider the context that the data came from, but also we need to critically examine the ramifications of producing the graphic. In particular, if our data points are human beings that were killed, tortured, or mistreated, there is danger in “dehumanizing” these people to single data points.
+
+Consider the following two examples, both of which map lynchings in the United States.
+
+
+Example 1: First, this chloropleth map shows reported lynchings in the southern United States between 1877 and 1950. Take a few moments to zoom in and out of the map to get a sense about how the data is presented.
+
+
+Example 2: Second, this map shows similar data but the data is presented as individual points instead of on a chloropleth map. Take a few moments to zoom in and out of the map to get a sense about how the data is presented.
+
+Exercise 1. Which of the two visualizations better humanizes the victims of lynching? Why?
+The second graph better humanizes the vicims of lynching because they give more detail of their race and the interactive timeline allows the audience to see the lynching during specific time periods.
+
+
+Exercise 2. Suppose that you want to humanize the victims more in a static, non-interactive graph. Brainstorm ways that you could achieve this.
+I could humanize the victims more in a static, non-interactive graph by showing a graph with the number of lynchings, colored by their race, with facets during specific time periods.
+
+
+Exercise 3. A deeper discussion of these sites appears in this paper. Read the Introduction section on TayTweets and write 3 major takeaways from this section.
+Three major takeaways from this section are that digital productions are not free from the cultural assumptions and prejudicies that shape everyday human experience, we must question if our graphical design will harm, mislead, or produce something that will cause a negative impact, and it is important to think of visualization ethics when using color, composition, line, symbols, type, and interactivity when representing people and places.
+
+Exercise 4. The authors of the book Data Feminism argue that “leveraging emotion” might help us better communicate with data. Read the first four paragraphs of Chapter 3 of the Data Feminism book. One example the authors use pertains to deaths from gun violence in the United States. Examine this animated chart. Explain how the chart uses emotion to convey the losses due to gun violence better than, for example, a statement that 11,356 people were killed from gun violence in 2018.
+This animated chart uses emotions to convey the losses due to gun violence by showing how young those victims were and the span of how long of their life they had to live (therefore how many years were taken away from their life as a result of gun violence.)
+
