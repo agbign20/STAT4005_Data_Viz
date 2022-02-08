@@ -1,0 +1,44 @@
+---
+title: "Take-Home Quiz 3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 3 Take-Home
+Complete this Quiz in a .Rmd file. Submit a .Rmd and a knitted .html file to GitHub by the due date and time.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own, and I have followed all rules for collaboration.”
+Alyssa Bigness
+
+Collaboration Reminder: You may work with other students who are in our class on the take-home quiz, but you must list who you worked with at the top of your quiz. Write the name of any student(s) that you collaborated with in the space below this (ignore this if you did not collaborate with any students).
+
+
+
+
+
+Question 1 (5 points). Consider the Challenger example in our course notes. Clearly, the graphic used to communicate the results is poorly made: it eliminates data points when it really should not. However, the engineers making the graph did not have “malicious intent:” they did not purposefully remove these data points to try to lie: it was a mistake. Is the visualization still unethical? Use principles from the Modern Data Science Readings to explain in a few sentences.
+The visualization is still unethical because the graph was used to make the decision to launch the shuttle and since there was data missing, there's a possibility that the decision would have been different if they saw that data that was missing.
+
+
+Question 2 (4 points). Find a graphic online, other than any given in our course readings, that is unethical. Provide a link to your graphic and give a 2-3 sentence description explaining why that graphic is not ethical.
+
+https://www.buzzfeednews.com/article/katienotopoulos/graphs-that-lied-to-us
+
+The Obamacare Enrollment showed a graphic online that is unethical. It is unethical because it shows the enrollment as of March 27 (6,000,000) way less than the March 31 goal (7,066,000), showing the March 31 goal to be about five times the size of 6,000,000 which is a wrong way to interpret the graph.
+
+
+Question 3 (3 points). Explain, in your own words, what each of the following Git terms mean:
+
+commit - saving changes made in the file.
+
+push - uploading the commit to github
+
+pull - downloading content from github to use on RStudio
+
+Question 4 (3 points). These three points are given if you successfully committed with a commit message and pushed your .Rmd and .html files to your GitHub account.
+
