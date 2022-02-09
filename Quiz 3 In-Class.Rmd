@@ -1,0 +1,45 @@
+---
+title: "Quiz 3 In-Class"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 3 In-Class
+Complete this quiz in a .Rmd file. To turn in the quiz, push both a .Rmd file and a knitted .html file to your GitHub site.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own. I have not communicated with or worked with anyone else on this quiz.”
+
+Alyssa Bigness
+
+Collaboration Reminder: You may not communicate with or work with anyone else on this quiz, but you may use any of our course materials or materials on the Internet.
+
+
+
+Question 1 (5 points). Suppose you do the following:
+
+You go to your GitHub site and make a change to the README file (adding a sentence, for example).
+In R Studio, you update one of your .Rmd files, adding a line of code and commit the file.
+You attempt to push the new file to your GitHub site.
+Once you get to the third step, you’ll get an error when you try to push. Why? What do you need to do first before you make the push in Step 3?
+I need to commit the README file and push that before I push the new file to my GitHub site.
+
+
+Question 2 (6 points). Give 2 advantages of using Git and GitHub. These must be advantages that we discussed in class (so you should not simply google “advantages of Git” and give the first two things that pop up).
+The first advantage is that we can use to share our code with other people using GitHub. Another advantage is that we can use other people code if their profile is public to use other datasets.
+
+
+Question 3 (6 points). Choose 1 of the 12 principles of the ethical practice of data science that you think is the most difficult to execute. Give a short, possibly hypothetical, example that illustrates how that principle could be difficult to follow.
+The principle of the ethical practice of the data science that I think is the most difficult to execute is Principle 9 because it is hard to think of the ethical implications of choices when creating a graph from its data since it can impact individuals and society in a horrible way. For example, the challenger incident was apart of this principle and the scientists did not think that excluding data would affect society and individuals badly, but it was unethical to exclude the data in the first place. The data they excluded in turn affected society and individuals in a bad way.
+
+
+Question 4 (6 points). The authors of Data Feminism argued that data scientists should “embrace emotion,” not ignore it when building visuals. State the example that the authors used to show how emotion can be used to make a visual stronger. Then, give an argument against “embracing emotion.” In other words, give an argument that data visualizations should be devoid of emotion as much as possible, even if that’s not what you believe.
+An example that the authors used to show how emotion can be used to make a visual stronger is the graph of the ages of the victims of the shooter. The graph also includes a line from the age they died to the age they should've lived up to, to show the number of years the victims lost of their life.
+Data visualizations should be devoid of emotions as much as possible if it has anything to do with politics because everyone might have different political beliefs.
+
+
+Question 5 (2 points). These two points are given for committing your .Rmd and .html files with a commit message correctly, and pushing them to your GitHub site.
