@@ -1,0 +1,52 @@
+---
+title: "Quiz 4 Take-Home"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 4 Take-Home
+Complete this Quiz in a .Rmd file. Submit a .Rmd and a knitted .html file to GitHub by the due date and time.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own, and I have followed all rules for collaboration.”
+Alyssa Bigness
+
+Collaboration Reminder: You may work with other students who are in our class on the take-home quiz, but you must list who you worked with at the top of your quiz. Write the name of any student(s) that you collaborated with in the space below this (ignore this if you did not collaborate with any students).
+
+
+Use the leaflet package and the us.cities data set from the maps package to make a Zoom-able map of the 50 U.S. capital cities. When you click on a marker for a capital city, both the city name and state as well as the pop (population) should be displayed.
+
+Note that, in the us.cities data set, state capitals are given a value of 2 in the capital variable.
+
+A second note is that if you cannot figure out how to get two “things” (in this case name and population) to display in Leaflet, you would just lose a single point for the quiz (so don’t spend too much time on that part unless you are inclined to do so).
+
+```{r}
+library(tidyverse)
+library(leaflet)
+library(usdata)
+state_df <- ggplot2::map_data("state")
+state_stats
+state_stats <- state_stats %>% mutate(state = str_to_lower(state))
+state_full <- left_join(state_df, state_stats, by = c("region" = "state"))
+
+content <- state_full %>%
+  mutate(popup = paste0(state_full$region, ', 2010 Population:',
+                        state_full$pop2010))
+
+state_map <- leaflet(state_full) %>%
+  setView(lng = -98.583, lat = 39.833, zoom = 4) %>% 
+  addTiles() %>% 
+  addProviderTiles(providers$Wikimedia) %>% 
+  addMarkers(
+             clusterOptions = markerClusterOptions(),
+             popup = content$popup)
+
+state_map
+
+```
+
+
