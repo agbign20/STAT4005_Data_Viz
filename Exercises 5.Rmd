@@ -1,0 +1,23 @@
+---
+title: "Exercises 5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+9.1 What is shiny?
+Perhaps the easiest way to see what shiny can do is with a couple of examples. First, check out this shiny app that explains some regression concepts.
+
+Exercise 1. What makes the app given in the first tab interactive? In other words, what is a user allowed to change in the app?
+The user is allowed to change the slope, intercept, number of data points, and the standard deviation of residuals, which allows the app given in the first tab to be interactive.
+
+Exercise 2. What are the outputs of the app? Are the outputs graphs, tables, or both?
+The outputs of the app are graphs and tables.
+
+Now, examine one of the apps at this r studio shiny gallery.
+
+Exercise 3. Write a short one paragraph description about the app you selected, including what the app allows the user to change, what the output is, and one interesting thing you found in the app.
+
+The app I selected is the Nutrition Calculator. The app allows the user to change the meal, the measure unit, the quantity, and the number of servings contained. The output of the app are graphs of the macro nutrients, minerals, nutrition table, and the vitamins. One interesting thing I found in the app is you can select from a variety of different common meals such as beef pot roast with browned potatoes, peas, and corn, or you can select an ingredient you might have used in a recipe such as unsalted butter.
