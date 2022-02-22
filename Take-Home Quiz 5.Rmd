@@ -1,0 +1,60 @@
+---
+title: "Take-Home Quiz 5"
+author: "Alyssa Bigness"
+date: "2/21/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 5 Take-Home
+Complete this Quiz in a .Rmd file. Submit a .Rmd and a knitted .html file to GitHub by the due date and time.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own, and I have followed all rules for collaboration.”
+Alyssa Bigness
+
+
+Collaboration Reminder: You may work with other students who are in our class on the take-home quiz, but you must list who you worked with at the top of your quiz. Write the name of any student(s) that you collaborated with in the space below this (ignore this if you did not collaborate with any students).
+
+
+
+
+
+Use the STAT 113 survey data set to explore the trend in the popularity of Facebook over time. Do this in 2 ways:
+
+(7 points). Construct a graph that uses the number of Facebook friends each student has.
+```{r}
+library(tidyverse)
+stat113_survey <- read_csv("data/stat113_survey.csv")
+
+stat113_survey_ex1 <-
+  stat113_survey %>%
+  group_by(Facebook) %>%
+  summarize(nStudents = n())
+
+ggplot(data = stat113_survey_ex1, aes(x = Facebook, y = nStudents)) + geom_col() + xlim(0, 2500) + ylim(0, 35)
+```
+
+
+
+
+(7 points). Construct a graph that uses the proportion of students that have Facebook (assuming that 0 friends means that the student does not have a Facebook account and more than 0 friends means that the student does have a Facebook account).
+```{r}
+stat113_survey_prop <-
+  stat113_survey %>%
+  summarize(ntotal = n(),
+            noFacebookn = sum(is.na(Facebook)),
+            Facebookn = sum(!is.na(Facebook))) %>% 
+  mutate(propnoFacebook = noFacebookn/ntotal,
+         propFacebook = Facebookn/ntotal)
+
+ggplot(data = stat113_survey_prop, aes(x = Facebookn, y = propFacebook)) + geom_point()
+```
+
+
+
+1 point is provided for committing and pushing to GitHub correctly.
