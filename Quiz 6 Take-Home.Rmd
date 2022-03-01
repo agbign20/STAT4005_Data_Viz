@@ -1,0 +1,121 @@
+---
+title: "Quiz 6 Take-Home"
+author: "Alyssa Bigness"
+date: "3/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quiz 6 Take-Home
+Complete this Quiz in a .Rmd file. Submit a .Rmd and a knitted .html file to GitHub by the due date and time.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own, and I have followed all rules for collaboration.”
+Alyssa Bigness
+
+Collaboration Reminder: You may work with other students who are in our class on the take-home quiz, but you must list who you worked with at the top of your quiz. Write the name of any student(s) that you collaborated with in the space below this (ignore this if you did not collaborate with any students).
+
+
+
+
+
+Construct a Shiny app for any data set that we have worked with so far (besides SLU Majors and Tennis) or for any data set you used in STAT/DATA 234. Thirteen points will be given for Shiny apps that:
+
+run,
+have at least 2 different inputs,
+have at least 1 plot output that looks presentable (e.g. appropriate labels, colour scale, and makes sense to construct).
+Then, write a 2 sentence description about the purpose of your app (2 points).
+
+Note that the in class version of the quiz will prompt you to use an app that has a sidebarLayout(). You do not need to use this function on the take-home quiz, but it may be helpful to use it for extra practice.
+```{r}
+library(tidyverse)
+library(shiny)
+```
+
+```{r}
+mlb2016 <- read_csv("data/mlb2016.csv")
+tidymlb <-
+  mlb2016 %>%
+    separate(., col = "Years", 
+             into = c("nSeasons", "Seasons"),
+             sep = " "
+             ) %>%
+    separate(., col = "Seasons",
+             into = c("StartYear", "EndYear"),
+             sep = "-") %>%
+    mutate(
+      across(.cols = 4:9, parse_number), 
+      EndYear = EndYear + 2000
+    ) %>%
+  filter(POS == "SP", 
+         Salary >= 20000000 ) %>%
+  mutate(
+    Name = fct_reorder(factor(Name), Salary),
+    Salary = Salary/1000000)
+
+
+  ggplot(data = tidymlb) + 
+  geom_linerange(aes(x = Name,
+                     ymin = StartYear,
+                     ymax = EndYear, 
+                     color = Salary),
+                 size = 2) + 
+  coord_flip() +
+  scale_color_viridis_c() +
+  theme_bw() +
+  scale_y_continuous(breaks = seq(2011, 2022, by = 2) )
+
+```
+
+
+```{r}
+var_choices <- names(tidymlb)[c(4:7)]
+ui <- fluidPage(
+  radioButtons(inputId = "varchoices",
+               label = "Choose a variable",
+               choices = var_choices),
+  selectizeInput("playerchoice",
+                 label = "Choose a Player", choices = levels(factor(tidymlb$Name)),
+                 selected = "Clayton Kershaw"),
+  plotOutput("varhist")
+)
+
+
+server <- function(input, output, session) {
+  mlb_sub <- reactive({
+    tidymlb %>% filter(Name == input$playerchoice)
+  })
+  
+   hist_plot <- reactive({
+    # ggplot(df_sub(), aes_string(x = input$varchoice)) +
+    # geom_histogram(colour = "black", fill = "white", bins = 15)
+    base_plot <- ggplot(mlb_sub(), aes(x = .data[[input$varchoice]]))
+  
+  if (is.numeric(mlb_sub()[[input$varchoice]]) == TRUE) {
+      
+      base_plot + geom_histogram(colour = "black", fill = "white") +
+        theme_minimal(base_size = 22)
+    } else if (is.character(mlb_sub()[[input$varchoice]])) {
+      base_plot + geom_bar(colour = "black", fill = "white") +
+        theme_minimal(base_size = 22) +
+        coord_flip()
+    }
+    
+  })
+   
+   output$varhist <- renderPlot({
+    ggplot(data = tidymlb, aes_string(x = input$varchoices)) + 
+      geom_histogram(colour = "black", fill = "white")
+  })
+   
+  }
+  
+shinyApp(ui, server)
+```
+
+The purpose of the app is to show each variable for players that have a salary of $20M or more and a histogram of each variable selected. Then an input of the player is selected to gather their individual data from the variable selected.
+
