@@ -1,0 +1,218 @@
+---
+title: "Midterm In-Class"
+author: "Alyssa Bigness"
+date: "3/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Midterm In Class
+Midterm In Class
+ Matt Higham
+
+Complete this exam in a .Rmd file. To turn in the exam, push both a .Rmd file and a knitted .html file to your GitHub site.
+
+Statement of Integrity: Copy and paste the following statement and then sign your name (by typing it) on the line below.
+
+“All work presented is my own. I have not communicated with or worked with anyone else on this exam.”
+Alyssa Bigness
+
+Collaboration Reminder: You may not communicate with or work with anyone else on this exam, but you may use any of our course materials or materials on the Internet.
+
+
+Question 1 (20 points). Examine the following plot that uses the pokemon_full.csv data set. The plot gives the count of each Pokemon type.
+```{r}
+library(tidyverse)
+library(here)
+pokemon_df <- read_csv(here("data/pokemon_full.csv"))
+pokemon_type <- pokemon_df %>% group_by(Type) %>% summarise(type_count = n())
+
+ggplot(data = pokemon_type, aes(x = Type, y = type_count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Type",
+       y = "Count") +
+  coord_flip()
+```
+
+part a. Which of the 7 grammar of graphics parameters are explicitly specified in the code to make the plot?
+
+The parameters explicitly specified in the code to make the plot are data, mappings, geom_function, stat, and coordinate_function.
+
+
+
+part b. For these types of plots, we have usually reordered the Type so that the type with the most Pokemon would be first and the type with the least number of pokemon would be last. Use a principle from the Data Visualization Reading to explain why we would want to do this.
+
+Trying to decode the graph without reordering the Type, explained in the Data Visualization Reading, would made it easy for readers to make a mistake trying to interpret the graph. Reordering allows readers to know whats larger and smaller than each other and can easily understand the data being presented.
+
+
+
+part c. We have also stated that, for bar plots and lollipop plots, 0 should be included in the plot. On the other hand, for point plots and scatterplots, 0 need not be included. Using a principle from the Data Visualization Reading, explain why it is okay to omit 0 from a point plot but not from a bar plot.
+
+It is okay to omit 0 from a point plot but not a bar plot because bar plots needs a baseline to make comparisons to with the other data we are using, it is needed in order to make clear interpretations. Point plots can omit 0 because the points all have a common baseline system where 0 does not need to be shown in order to make comparisons.
+
+
+
+Question 2 (5 points). These points will be given for properly committing and pushing a .Rmd and a .html file with your exam answers.
+
+
+
+Question 3 (5 points). Tell me something you learned about ethics in data visualization.
+I learned that for ethics in data visualization, excluding data should only happen with good reason and it should be said which data was excluded and why. It can unintentionally harm individual people as well as society as a whole.
+
+
+
+Question 4 (20 points).
+
+part a. A data set on United States election results was obtained from https://github.com/kjhealy/us_elections_2020_csv. Use the maps package, as well as this data set (posted on Sakai), to construct a map that fills each U.S. State with the percent of voters who voted for the republican candidate, Trump (percent_gop). For this problem,
+
+you do not need to worry about including Alaska or Hawaii. They are important but this is a timed exam!
+you should change the colour scale so that it is appropriate for the problem.
+
+```{r}
+library(maps)
+library(tidyverse)
+library(here)
+election_df <- read_csv(here("data/2020_county_pres.csv")) %>%
+  group_by(state_name) %>%
+  summarise(total_gop = sum(votes_gop),
+            total_dem = sum(votes_dem)) %>%
+  mutate(percent_gop = 100 * total_gop / (total_gop + total_dem)) %>%
+  mutate(state_name = str_to_lower(state_name))
+
+
+state_df <- ggplot2::map_data("state")
+state_full <- inner_join(state_df, election_df, by = c("region" = "state_name"))
+
+ggplot(data = state_full, aes(x = long, y = lat, group = group)) +
+  geom_polygon(colour = "black", aes(fill = percent_gop)) +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
+  theme_void() +
+  scale_fill_viridis_c(direction = -1)
+```
+
+
+part b. Explain why the data frame R needs to construct a map of the United States is much, much longer than 50 rows.
+
+The data frame R needs to construct a map of the United States is much, much longer than 50 rows because for every state there are rows dedicated to the longitude and latitude. So several rows will repeatedly show a state because it has the data of the longitude and latitude of the states borders, for each state border.
+
+
+
+Question 5 (25 points). Construct a shiny app using the alcohol.csv data set that has a scatterplot of the number of wine servings vs. the number of beer servings. In the app, the user should be able to select a country and have a label for that country appear on the app.
+
+In addition, create an input that lets the user choose a variable (either beer_servings, spirit_servings, and wine_servings) and create an output that is a histogram based on that variable.
+
+So you can focus your time on shiny as much as possible, a static graph or wine servings vs. beer servings, with Australia labeled, is given below (you may copy this code to use in your app if you would like).
+
+You must complete this task using shiny (even though you could do something similar using plotly).
+
+
+```{r}
+library(shiny)
+library(tidyverse)
+library(ggrepel)
+library(here)
+alcohol_df <- read_csv(here("data/alcohol.csv"))
+
+onecountry_df <- alcohol_df %>% filter(country == "Australia")
+
+ggplot(alcohol_df, aes(x = beer_servings, y = wine_servings)) +
+  geom_point() +
+  geom_label_repel(data = onecountry_df, aes(label = country)) +
+  geom_point(data = onecountry_df, size = 3, shape = 1)
+```
+
+Check Midterm_shiny_alcohol.R for this Question.
+
+
+Question 6 (10 points). For the following shiny app, draw a reactive graph. I think the easiest way to do this would be to hand-draw the graph and hand it in on a piece of paper (there is paper at the front of the room). If you can figure out a way to draw it on your computer, you may do that and push that file to GitHub.
+
+
+Check the piece of paper for this Question.
+
+
+
+
+Question 7 (20 points). Consider again the women’s tennis data set, wta_matches_2019.csv, where each row corresponds to a match played on the WTA (Women’s Tennis Association) tour. Important variables to consider for this problem include:
+
+winner_name, the name of the player who won the match
+loser_name, the name of the player who lost the match
+Construct a lollipop chart that shows the 10 WTA tennis players with the highest average number of aces in the 2019 season who have played at least 20 matches.
+
+Some Hints:
+
+if you can’t complete the task, make a lollipop chart of something to earn some partial credit.
+variables that you will need are winner_name, loser_name, w_ace, and l_ace.
+we haven’t done much in tidyr in class so I’ve already pivoted the data set for you (see code below).
+you will need to create a new variable called aces that is the w_ace if the player won (so if won_or_lost is winner_name) and l_ace if the player lost.
+recall that, if there are missing values, you will need to remove them when finding the mean aces for a player. You can do this with the na.rm = TRUE argument to your summarise() function. See https://highamm.github.io/datascience234/dplyr.html#removing-missing-values for a quick review of this.
+you will also need to count up the matches for each player and use a filtering join to only keep players who have played 20 or matches. As I’m writing this, I am realizing we did not do a ton with joins….so here is some code that may be helpful: semi_join(data_set_with_players_and_mean_aces, data_set_with_players_with_20_matc
+
+
+```{r}
+library(tidyverse)
+library(here)
+wta_df <- read_csv(here("data/wta_matches_2019.csv"))
+wta_long <- wta_df %>% pivot_longer(c(winner_name, loser_name),
+                                    names_to = "won_or_lost",
+                                    values_to = "player") %>%
+  select(won_or_lost, player, everything())
+
+wta_df <- wta_df %>%
+  mutate(winner_name = fct_reorder(winner_name, w_ace)) %>%
+  slice(1:15)
+
+ggplot(data = wta_df, aes(x = winner_name, y = w_ace)) +
+  geom_point() + 
+  geom_segment(aes(x = winner_name, xend = winner_name, y = 0, yend = w_ace)) +
+  coord_flip() +
+  labs(x = "Winner Name", 
+       y = "Number of Winning Matches")
+
+
+```
+
+
+
+
+Question 8 (20 points).
+
+part a. Consider the lollipop plot you made in Question 7. Why is this plot not the best plot to make to look at the top women’s servers in 2019? (There might be a couple of reasons but you should reference one that we have explicitly talked about in class a lot).
+
+This plot is not the best plot to make to look at the top women's servers in 2019 because it has variability in the data visualization. 
+
+part b. Fix the plot so that it no longer has the issue you described in Question 8a. If you could not make the plot in Question 7, use this much simpler data set to plot the mean of yvar for each group and then fix the issue.
+
+```{r}
+library(tibble)
+set.seed(03092022)
+toy_df <- tibble(group = c("a", "a", "a", "b", "b", "b", "c", "c",
+                           "c", "c", "d", "d"),
+       response = rnorm(12, 4, 3))
+
+toy_response <- toy_df %>%
+  group_by(group) %>%
+  summarise(avg_response = mean(response, na.rm = TRUE)) %>%
+  mutate(group = fct_reorder(group, avg_response))
+
+new_toy_df <-
+  toy_df %>% 
+  group_by(group) %>%
+  mutate(meanresponse = mean(response, na.rm = TRUE)) %>%
+  ungroup() %>%
+  arrange(meanresponse) %>%
+  mutate(group = fct_inorder(group))
+
+
+
+ggplot(data = toy_df, aes(x = group, y = response)) +
+  geom_point(alpha = 0.3) +
+  coord_flip() +
+  geom_point(data = toy_response, aes(y = avg_response),
+             colour = "red")
+```
+
+
+
