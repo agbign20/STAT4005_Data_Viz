@@ -1,0 +1,45 @@
+---
+title: "Midterm Take-Home Mini-Tutorial 2"
+author: "Alyssa Bigness"
+date: "3/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Mini-Tutorial 2: Mapping (15 points)
+
+Topics to Cover:
+
+Either mapping with the maps package OR mapping from a shapefile. Many shapefiles can be found at https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+Make sure to include:
+
+(4 points) An introductory statement with the goal of the section (in your own words) and a brief description of the data set and variables you will be using.
+
+(11 points) R code chunks interspersed with some text descriptions about the code you have written and with text description about each topic. If you are using the maps package, you should use a map other than the U.S. States Map or World Map that we used in class.
+
+
+Introduction:
+The goal of this section is to show how to create a map in R using the maps library. The data set I will be using is france_df which is a map of france from the maps package. The variables I will be using from the dataset is the long (longitude), lat (latitude), order, and region.
+
+
+The maps package has pre-drawn maps for parts of the world, for example we will be using the France map in this part of the tutorial.
+```{r}
+## install.packages("maps")
+library(maps)
+library(tidyverse)
+
+france_df <- ggplot2::map_data("france")
+france_df %>% nrow
+
+ggplot(data = france_df,
+            mapping = aes(x = long, y = lat,
+                          group = group)) +
+  geom_polygon(fill = "white", color = "black")  +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) + 
+  theme_void()
+```
+We use geom_polygon() and the group aesthetic to tell R Studio how to create the boundaries of France. The albers projection for the coord_map shows areas accurately but distorts the shapes, while the theme_void() removes the x axis and y axis and their tick marks.
+

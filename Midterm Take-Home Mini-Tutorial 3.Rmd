@@ -1,0 +1,55 @@
+---
+title: "Midterm Take-Home Mini-Tutorial 3"
+author: "Alyssa Bigness"
+date: "3/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Mini-Tutorial 3: Expressing Uncertainty (15 points)
+
+Topics to Cover:
+
+Incorporating Data Variability in Graphs
+Make sure to include:
+
+(4 points) An introductory statement with the goal of the section (in your own words) and a brief description of the data set and variables you will be using.
+
+(11 points) R code chunks interspersed with some text descriptions about the code you have written and with text description about each topic. For this section, you should actually make a graph (and not simply find an example already online like we looked at for hurricane graphs).
+
+Introduction:
+The goal of the section is to investigate why graphs that express variability perform better than graphs that do not for others looking at the data. The data set we will be using is the stat113_survey. The variables we will be using are the GPA (grade point average) and Greek (whether the student will join the Greek life).
+
+We will first load in the stat 113 survey data set and then create a graph with variability using the variables Greek and the GPA.
+```{r}
+library(tidyverse)
+stat_survey_df <- read_csv("data/stat113_survey.csv")
+stat_gpa <- stat_survey_df %>%
+  filter(., GPA <= 4) %>%
+  group_by(Greek) %>%
+  summarise(avg_gpa = mean(GPA, na.rm = TRUE)) %>%
+  mutate(Greek = fct_reorder(Greek, avg_gpa))
+
+
+statgpa_small <- stat_survey_df %>% 
+  filter(., GPA <= 4) %>%
+  group_by(Greek) %>%
+  mutate(meangpa = mean(GPA, na.rm = TRUE)) %>%
+  ungroup() %>%
+  arrange(meangpa) %>%
+  mutate(Greek = fct_inorder(Greek))
+```
+
+
+Here is the graph with the red dot representing the mean GPA.
+```{r}
+ggplot(data = statgpa_small, aes(x = Greek, y = GPA)) +
+  geom_point(alpha = 0.3) +
+  coord_flip() +
+  geom_point(data = stat_gpa, aes(y = avg_gpa),
+             colour = "red")
+```
+This data visualization is more helpful at conveying variability since it is representing summary statistics and showing the underlying data.

@@ -1,0 +1,82 @@
+---
+title: "Midterm Take-Home Mini-Tutorial 1"
+author: "Alyssa Bigness"
+date: "3/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Midterm Take Home
+Midterm Take Home
+ Matt Higham
+
+Complete this exam in a .Rmd file. To turn in the exam, push 4 .Rmd files and 4 knitted .html files to your GitHub repository.
+Statement of Integrity: Copy and paste the following statement into your first .Rmd file and then sign your name (by typing it) on the line below.
+“All work presented is my own. I have not communicated with or worked with anyone else on this exam.”
+Alyssa Bigness
+Collaboration Reminder: You may not communicate with or work with anyone else on this exam, but you may use any of our course materials or materials on the Internet.
+
+
+Mini-Tutorial 1: Data Visualization Concepts (20 points)
+
+Topics to Cover:
+
+Grammar of Graphics.
+(7 parameters of grammar of graphics)
+
+One topic from the Data Visualization Reading of your choice.
+(importance of colours hue in a graph)
+A second topic from the Data Visualization Reading of your choice.
+(importance of colours intensity in a graph)
+
+Make sure to include:
+
+(4 points) An introductory statement with the goal of the section (in your own words) and a brief description of the data set and variables you will be using.
+
+
+(16 points) R code chunks interspersed with some text descriptions about the code you have written and with text description about each topic. All three topics should have some R code. The data you use can be real data or it can be “toy” data (generated from tibble()).
+
+you do not need to cover everything in these topics: aim for writing something that someone would be able to read through in ~ 10 minutes.
+
+
+
+Introduction:
+The goal of the section is to show how the 7 parameters are useful to gain insight into a deep structure that underlies statistical graphics, as well as understand how to make a data visualization that can be easily interpreted for others. 
+
+The data set I will be using is a "toy" data set generated from tibble(). The variables I will be using are xvar, yvar, and Species.
+
+
+First, we need to load in the "toy" data generated from tibble().
+```{r}
+library(tidyverse)
+toy_df <- tibble(Artists = c("Taylor Swift", "Kanye West", "Katy Perry", "Adele"),
+                 yvar = c(6, 7, 5, 9),
+                 Species = c("Cat", "Dog", "Horse", "Pig"))
+```
+
+
+The 7 parameters in a grammar of graphics is the data, mappings, geom_function, stat, position, facet_function, and coordinate_function. Lets look at the graph of the toy data set.
+```{r}
+ggplot(data = toy_df,
+       aes(x = Artists, y = yvar)) + 
+  geom_col(colour = "black", fill = "white", position = "dodge") + 
+  facet_wrap(~Species) +
+  coord_flip()
+```
+We used the data parameter when using the toy_df data set and the mappings parameter when graphing the aesthetics which includes the x and y position and the colour and fill function. We also used the geom_function when creating the columns for each artist, the position parameter to rearrange the way the data is positioned on the graph, the facet_function to create subplots to compare each species, and the coordinate_function when flipping the coordinate system.
+
+
+```{r}
+ggplot(data = toy_df,
+       aes(x = Artists, y = yvar, fill = Species)) +
+stat_summary_bin(fun = "mean", geom = "bar") 
+```
+We used the stat parameter here to look at the statistical transformation of the graph. 
+
+Hue is very important when constructing graphs. We use unordered hues rather than sequential or diverging since species in this data set has unordered categories, rather than numbers. These colors in our qualitative palette represent each artist are perceptually uniformed for readers for this graph. 
+
+Intensity of the colour is also very important when constructing graphs. The colours intensity draws the attention of the viewers and since the graphs fill colors have the same intensity, the viewers will be drawn to each column and no category specifically.
+
+
